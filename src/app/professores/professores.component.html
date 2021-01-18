@@ -1,0 +1,83 @@
+<div class="row">
+
+    <div class="col-sm-6" *ngIf="professorSelect ">
+        <div class="row">
+
+            <div class="mr-auto">
+                <app-titulo [titulo]="'Codigo:' + professorSelect.id"></app-titulo>
+            </div>
+
+            <div class="mt-1">
+                <button class="btn btn-outline-danger" (click)="voltar()">Fechar</button>
+            </div>
+
+        </div>
+
+        <form [formGroup]="professorForm" (submit)="professorSubmit()">
+            <div class="form-group">
+                <label for="formGroupExampleInput" class="form-label">Nome</label>
+                <input type="text" class="form-control" formControlName="nome">
+            </div>
+
+            <div class="form-group">
+                <label for="formGroupExampleInput2" class="form-label">Disciplina</label>
+                <input type="text" class="form-control" formControlName="disciplina">
+            </div>
+
+            <div class="form-group">
+                <hr />
+                <button class="btn btn-outline-success" [disabled]="!professorForm.valid">Enviar</button>
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <div [ngClass]="{'col-sm-6': professorSelect, 'col-sm-12': !professorSelect}">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Visualizar</th>
+                    <th scope="col">Codigo</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Disciplina</th>
+                    <th scope="col">Opções</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let professor of professores">
+                    <td> <button class=" text-dark btn btn-sm btn-outline-warning"
+                            (click)="professorSelecionado(professor)">Detalhe</button></td>
+                    <th scope="row">{{professor.id}}</th>
+                    <td>{{professor.nome}}</td>
+                    <td>{{professor.disciplina}}</td>
+                    <td>
+                        <div class="btn-group">
+                            <button class="text-dark btn btn-sm btn-outline-primary"
+                                (click)="openModal(template)">Alunos</button>
+                            <button class="text-dark btn btn-sm btn-outline-danger">Desativar</button>
+                        </div>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<ng-template #template>
+
+    <div class="modal-body">
+        <app-alunos></app-alunos>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger " aria-label="Close" (click)="modalRef.hide()">
+            FECHAR
+        </button>
+    </div>
+
+
+</ng-template>
